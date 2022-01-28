@@ -1,0 +1,169 @@
+<style>
+  .message{
+    border: 2px solid #e1e1e1;
+  }
+  .notification{
+    background: transparent;
+  }
+  .message-header{
+    background: #E5DFDD ;
+    color: black;
+  }
+  .card{
+    border: 1px solid #C1C4C2;
+  }
+</style>
+<div *ngFor="let p of products">
+  <div *ngIf="p.id == mostrar">   
+    <div class="container">
+      <div class="notification">
+        <div class="columns">
+          <div class="column is-7">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-4by3">
+                  <img src={{p.imgurl}} alt="Placeholder image">
+                </figure>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p>Por: {{p.nombre}}</p>
+                  <br>
+                  <time datetime="2016-1-1">{{p.fecha | date:'short'}}</time>
+                </div>
+              </div>
+            </div>
+            <div>
+              <form >
+                <div *ngIf="_ps.usuario.uid">
+                  <input 
+                    (keyup.enter)="comentar($event,_ps.usuario.uid,_ps.usuario.nombre,p.comentarios,p.id)"
+                    class="input is-rounded mt-3" 
+                    type="text" 
+                    placeholder="Comentario" 
+                    [formControl] = "mensaje"
+                    
+                  >
+                  <button 
+                    class="button is-dark mt-2" 
+                    type="button"
+                    (click) = "comentar($event,_ps.usuario.uid,_ps.usuario.nombre,p.comentarios,p.id)"
+                  >Comentar</button>
+                </div>
+              </form >
+              <div *ngFor="let coment of p.comentarios">
+                <article class="message is-gray mt-3">
+                  <div class="message-header">
+                    <p>{{coment.nombre}}</p>
+                  </div>
+                  <div class="message-body">
+                    {{coment.mensaje}}
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+          <div class="column mt-3 mb-1">
+            <button *ngIf="_ps.usuario.uid" class="button is-dark  is-medium is-fullwidth" (click) = "votar(p.votos,p.id,_ps.usuario.uid,p.haVotado)">Me Gusta <li class="fas fa-heart" style="color: #F02C2C;"></li></button>
+            <p class="has-text-centered mt-1"><li class="fas fa-heart" style="color: #F02C2C;"></li> {{p.votos}}</p>
+            <div class="column mt2">
+              <article class="message is-dark mt-3">
+                <div class="message-header">
+                  Descripcion
+                </div>
+                <div class="message-body">
+                  <p>Descripcion: {{p.descripcion}}</p>
+                  <p>Precio: {{p.precio}} $</p>
+                </div>
+              </article>
+              
+              <div *ngIf="_ps.usuario.uid == p.creador">
+                <article class="message is-warning mt-3">
+                  <button  class="button is-warning  is-medium is-fullwidth" (click)="editProduct()" >Editar</button>
+                  <div *ngIf="editing" class="message-body">
+                    <form *ngIf="_ps.usuario.uid" (ngSubmit)= "agregarProduct(url.value,p.id)">
+                      <div class="container">
+                          <div class="control">
+                            <label>Nombre Del Producto</label>
+                            <input 
+                              class="input is-focused mt-3" 
+                              type="text" 
+                              name = "nombre"
+                              [(ngModel)] = "product.nombre"
+                              placeholder="Nombre del Producto"
+                            >
+                          </div>
+                          <div class="control mt-3 mb-3">
+                            <label>Precio</label>
+                            <input 
+                              class="input is-focused mt-3" 
+                              type="number" 
+                              name="precio"
+                              [(ngModel)] = "product.precio"
+                              placeholder="Precio"
+                            >
+                          </div>
+                        <div class="file has-name is-boxed">
+                          <label class="file-label">
+                            <input class="file-input" type="file" name="resume" accept=".jpg, .png" (change)="onUpload($event)">
+                            <span class="file-cta">
+                              <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                              </span>
+                              <span class="file-label">
+                                Seleccionar Imagen
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                          <input 
+                            type="hidden" 
+                            name="urlImagen" 
+                            [value] = "urlImagen | async"
+                            #url
+                          />
+                          <div class="control">
+                            <label>Descripcion</label>
+                            <textarea 
+                              class="textarea is-focused mt-3" 
+                              name = "descripcion"
+                              [(ngModel)] = "product.descripcion"
+                              placeholder="Descripcion De Su Producto"
+                            ></textarea>
+                          </div>
+                          <div class="has-text-centered">
+                            <button class="button is-dark is-medium is-fullwidth mt-3" type="submit">Subir</button>
+                          </div>
+                        </div>
+                    </form>
+                  </div>
+                </article>
+                <button  class="button is-danger  is-medium is-fullwidth" (click)="eliminar($event,p)" >Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- desde aqui -->
+<!-- <button (click)="editProduct()">
+  Edit 
+ </button>
+ <div *ngIf="editing">
+   <form (ngSubmit)="updateProduct(product)">
+     <input type="text" name="name" >
+     <input type="text" name="description" >
+     <input type="text" name="price">
+     <button type="submit">
+       Update
+     </button>
+   </form>
+ </div> -->
+
+
+
+
+ 
+<!-- hasta aqui -->

@@ -1,20 +1,115 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<style>
+  .navbar {
+    padding: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  .navbar-menu{
+    /* margin-left: 30rem; */
+    float: right;
+    background: #363636;
+    color: blanchedalmond;
+  }
+  img{
+    margin-left: 50px;
+    width:60px;
+    height:60px;
+    border-radius: 60px;
+  }
+  .card{
+    margin-right: 60px;
+    border-radius: 15px;
+    border: 1px solid #B7BDB9;
+  }
+  .card-content{
+    padding: 50px;
+  }
+  .media{
+    margin-right: -2rem;
+    margin-top: -1rem;
+    margin-left: -2rem;
+    font: oblique bold 120% cursive;
+  }
+  .navbar-item{
+  color: #d3cbcb;
+}
+</style>
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" [routerLink]="['home']">
+      <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+    </a>
 
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+      data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu is-dark">
+    <div class="navbar-start">
+      <a class="navbar-item" [routerLink]="['home']">
+        <i class="fas fa-home"> </i>
+        Home
+      </a>
+      
+      <a class="navbar-item" [routerLink]="['populares']">
+        <i class="fas fa-arrow-circle-up"> </i>
+        Populares
+      </a>
+      <a *ngIf="_ps.usuario.uid" class="navbar-item" [routerLink]="['nuevoproducto']">
+        <i class="fas fa-cart-plus"> </i>
+        Crear Producto
+      </a>
+      
+      <a *ngIf="_ps.usuario.uid" class="navbar-item" [routerLink]="['misproductos']">
+        <i class="fas fa-shopping-basket"> </i>
+        Mis Productos
+      </a>
+      <a *ngIf="_ps.usuario.uid" class="navbar-item" [routerLink]="['carrito']">
+        <i class="fas fa-shopping-cart"> </i>Carrito
+      </a>
+    </div>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <div *ngIf="!_ps.usuario.uid">
+            <a *ngIf="4==3" class="button is-primary" [routerLink]="['cuenta']">
+              <strong>Crear Cuenta</strong>
+            </a>
+            <a class="button is-light" [routerLink]="['login']">
+              Iniciar Sesion
+            </a>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="_ps.usuario.uid">
+        <div class="dropdown is-hoverable is-right mr-6">
+          <div class="media-left">
+              <img src="{{_ps.usuario.imagen}}" >
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+            <div class="card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content">
+                    <p class="title is-4 has-text-centered">Hola: {{_ps.usuario.nombre}}</p>
+                    <p class="subtitle is-6 mt-2 has-text-centered">{{_ps.usuario.email}}</p>
+                  </div>
+                </div>
+                <div class="content">
+                  <a class="button is-dark" (click)="_ps.logout()">
+                    Cerrar Sesion
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<router-outlet></router-outlet>

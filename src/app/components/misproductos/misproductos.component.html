@@ -1,0 +1,43 @@
+<style>
+  .container{
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    border: 2px solid #d3cbcb;
+  }
+  .title a{
+    text-decoration: none;
+  }
+  img{
+  width: 200px; height: 180px;
+
+}
+</style>
+<div *ngIf="products.length > 0 ">
+  <ul *ngFor="let p of products">
+    <div *ngIf="productService.usuario.uid == p.creador" class="container is-fullhd">
+      <div class="notification ">
+        <div class="columns">
+          <div class="column">
+            <figure class="image">
+              <img src = {{p.imgurl}}>
+            </figure>
+          </div>
+          <div class="column">
+            <p class="title"><a [routerLink] = "['../productos']" (click) = "enviar(p)">{{p.nombre}}</a></p>
+            <p class="comentario">Comentarios: {{p.comentarios.length}}</p>
+            <p>{{p.fecha | date:'short'}}</p>
+            <p>{{p.fecha | fecha}}</p>
+            <p></p>
+          </div>
+          <div class="column">
+            <p class="title">Eliminar</p>
+            <a (click)="carrito(productService.usuario.uid,p.id,p.carrito)"><i class="fas fas fa-times fa-3x" style="color:#f87676;"></i></a>
+          </div>
+          <div class="column">
+            <p class="title">{{p.votos}} <li class="fas fa-heart" style="color: #F02C2C;"></li></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ul>
+</div>

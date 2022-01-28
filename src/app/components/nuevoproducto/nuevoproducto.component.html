@@ -1,0 +1,104 @@
+<style>
+  .marco{
+  width: 400px;
+  height: 600px;
+  padding: 40px 50px;
+  padding-bottom: 40px;
+  margin: 0 auto;
+  background: #3C3B3F;
+  background: -webkit-linear-gradient(to right, #605C3C, #3C3B3F);
+  background: linear-gradient(to right, #605C3C, #3C3B3F);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  border-radius: 7px;
+  margin-top: 2rem;
+  margin-bottom: 60px;
+  }
+  .title{
+    float: left;
+    color: ivory;
+  }
+  label{
+    color: white;
+    font-family: fantasy;
+  }
+  input{
+    background: #3C3B3F;
+    border-radius: 15px;
+    color: aliceblue;
+  }
+  textarea{
+    background: #3C3B3F;
+    border-radius: 15px;
+    color: aliceblue;
+  }
+  .button{
+    border-radius: 15px;
+    font-family: cursive;
+  }
+</style>
+<form *ngIf="_ps.usuario.uid" (ngSubmit)= "agregarProduct(_ps.usuario.uid,url.value)">
+  <div class="container">
+    <div id="particles-js"></div>
+    <div  class="marco">
+      <label class="title has-text-centered" >Crear Nuevo Producto</label>
+      <div class="control">
+        <label>Nombre Del Producto</label>
+        <input 
+          class="input is-focused mt-3" 
+          type="text" 
+          name = "nombre"
+          [(ngModel)] = "product.nombre"
+          placeholder="Nombre del Producto"
+        />
+      </div>
+      <div class="control mt-3 mb-3">
+        <label>Precio</label>
+        <input 
+          class="input is-focused mt-3" 
+          type="number" 
+          name="precio"
+          [(ngModel)] = "product.precio"
+          placeholder="Precio"
+        />
+      </div>
+    <!-- ds -->
+    <div class="file has-name is-boxed">
+      <label class="file-label">
+        <input class="file-input" type="file" name="resume" accept=".jpg, .png" (change)="onUpload($event)">
+        <span class="file-cta">
+          <span class="file-icon">
+            <i class="fas fa-upload"></i>
+          </span>
+          <span class="file-label">
+            Seleccionar Imagen
+          </span>
+        </span>
+        <!-- <span class="file-name">
+          
+        </span> -->
+      </label>
+    </div>
+    <!-- d -->
+      <!-- <input type="file" accept=".jpg, .png" (change)="onUpload($event)"> -->
+      <input 
+        type="hidden" 
+        name="urlImagen" 
+        [value] = "urlImagen | async"
+        #url
+      />
+      <div class="control">
+        <label>Descripcion</label>
+        <textarea 
+          class="textarea is-focused mt-3" 
+          name = "descripcion"
+          [(ngModel)] = "product.descripcion"
+          placeholder="Descripcion De Su Producto"
+        ></textarea>
+      </div>
+      <div class="has-text-centered">
+        <button class="button is-dark is-medium is-fullwidth mt-3" type="submit">Enviar</button>
+        
+      </div>
+    </div>
+  </div>
+</form>
